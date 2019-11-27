@@ -5,13 +5,14 @@
  */
 package beans;
 
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
- *
- * @author pieji
+ * @author Jonas Michiels en Pieter-Jan Steeman
  */
 @Remote
 public interface OpvragenRemote {
-    
+        List<Object> opvragenComp();
+        Object opvragenCompById(int cid);
 }

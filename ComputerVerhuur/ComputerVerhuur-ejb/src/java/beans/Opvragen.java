@@ -5,15 +5,26 @@
  */
 package beans;
 
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
- *
- * @author pieji
+ * @author Jonas Michiels en Pieter-Jan Steeman
  */
 @Stateless
 public class Opvragen implements OpvragenRemote {
+    
+    @PersistenceContext private EntityManager em;
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    public List<Object> opvragenComp(){
+        List<Object> comp = em.createNamedQuery("Computers.findAll").getResultList();
+        return comp;
+    }
+    
+    public Object opvragenCompById(int cid){
+        Object comp = em.createNamedQuery("Computers.findByCId").setParameter("cId",cid).getResultList().get(0);
+        return comp;
+    }
 }
