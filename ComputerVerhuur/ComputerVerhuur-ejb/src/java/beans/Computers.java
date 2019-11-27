@@ -6,7 +6,7 @@
 package beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Computers.findAll", query = "SELECT c FROM Computers c")
-    , @NamedQuery(name = "Computers.findLast", query = "SELECT max(c.cId) FROM Computers c")
     , @NamedQuery(name = "Computers.findByCId", query = "SELECT c FROM Computers c WHERE c.cId = :cId")
     , @NamedQuery(name = "Computers.findByCNaam", query = "SELECT c FROM Computers c WHERE c.cNaam = :cNaam")
     , @NamedQuery(name = "Computers.findByCOmsch", query = "SELECT c FROM Computers c WHERE c.cOmsch = :cOmsch")
@@ -40,9 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Computers.findByCAankoop", query = "SELECT c FROM Computers c WHERE c.cAankoop = :cAankoop")
     , @NamedQuery(name = "Computers.findByCHuur", query = "SELECT c FROM Computers c WHERE c.cHuur = :cHuur")})
 public class Computers implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mComp")
-    private Collection<Momenten> momentenCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -82,8 +78,8 @@ public class Computers implements Serializable {
     @NotNull
     @Column(name = "c_huur")
     private int cHuur;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cId")
-    private Collection<Reservaties> reservatiesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mComp")
+    private List<Momenten> momentenList;
 
     public Computers() {
     }
@@ -168,12 +164,12 @@ public class Computers implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Reservaties> getReservatiesCollection() {
-        return reservatiesCollection;
+    public List<Momenten> getMomentenList() {
+        return momentenList;
     }
 
-    public void setReservatiesCollection(Collection<Reservaties> reservatiesCollection) {
-        this.reservatiesCollection = reservatiesCollection;
+    public void setMomentenList(List<Momenten> momentenList) {
+        this.momentenList = momentenList;
     }
 
     @Override
@@ -199,15 +195,6 @@ public class Computers implements Serializable {
     @Override
     public String toString() {
         return "beans.Computers[ cId=" + cId + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Momenten> getMomentenCollection() {
-        return momentenCollection;
-    }
-
-    public void setMomentenCollection(Collection<Momenten> momentenCollection) {
-        this.momentenCollection = momentenCollection;
     }
     
 }

@@ -6,8 +6,8 @@
 package beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -59,7 +59,7 @@ public class Momenten implements Serializable {
     @ManyToOne(optional = false)
     private Computers mComp;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rMoment")
-    private Collection<Reservaties> reservatiesCollection;
+    private List<Reservaties> reservatiesList;
 
     public Momenten() {
     }
@@ -107,12 +107,12 @@ public class Momenten implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Reservaties> getReservatiesCollection() {
-        return reservatiesCollection;
+    public List<Reservaties> getReservatiesList() {
+        return reservatiesList;
     }
 
-    public void setReservatiesCollection(Collection<Reservaties> reservatiesCollection) {
-        this.reservatiesCollection = reservatiesCollection;
+    public void setReservatiesList(List<Reservaties> reservatiesList) {
+        this.reservatiesList = reservatiesList;
     }
 
     @Override
