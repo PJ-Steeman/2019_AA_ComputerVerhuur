@@ -47,7 +47,7 @@
                     <p>${sessionScope.compinfo.CHuur}</p>
                 </td>
         </table>
-        <c:if test="${sessionScope.docent == comp.COpl}">
+        <c:if test="${sessionScope.richting == comp.COpl}">
             <form method="post" action='<c:url value="CVcontroller"/>'>
             <table>
                 <tr>

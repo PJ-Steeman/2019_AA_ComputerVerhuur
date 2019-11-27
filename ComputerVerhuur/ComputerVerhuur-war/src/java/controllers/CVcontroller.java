@@ -118,7 +118,7 @@ public class CVcontroller extends HttpServlet {
                 compAank = Integer.parseInt(request.getParameter("Aankoop"));
                 compHuur = Integer.parseInt(request.getParameter("Huur"));
                 String richting = (String) request.getSession().getAttribute("richting");
-                tbean.toevoegenComp(request.getParameter("Naam"), request.getParameter("Omsch"), request.getParameter("Lokaal"), richting, compSerie, compAank, compHuur);
+                //tbean.toevoegenComp(request.getParameter("Naam"), request.getParameter("Omsch"), request.getParameter("Lokaal"), richting, compSerie, compAank, compHuur);
                 
                 compLijst = obean.opvragenComp();
                 getServletContext().setAttribute("computers", compLijst);
@@ -129,7 +129,7 @@ public class CVcontroller extends HttpServlet {
                 compSerie = Integer.parseInt(request.getParameter("SerieNr"));
                 compAank = Integer.parseInt(request.getParameter("Aankoop"));
                 compHuur = Integer.parseInt(request.getParameter("Huur"));
-                tbean.wijzigComp((int) request.getSession().getAttribute("compId"), request.getParameter("Naam"), request.getParameter("Omsch"), request.getParameter("Lokaal"), compSerie, compAank, compHuur);
+                //tbean.wijzigComp((int) request.getSession().getAttribute("compId"), request.getParameter("Naam"), request.getParameter("Omsch"), request.getParameter("Lokaal"), compSerie, compAank, compHuur);
                 break;
         }
     }

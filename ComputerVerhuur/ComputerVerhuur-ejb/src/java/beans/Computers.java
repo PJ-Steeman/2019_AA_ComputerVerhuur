@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Computers.findAll", query = "SELECT c FROM Computers c")
+    , @NamedQuery(name = "Computers.findLast", query = "SELECT max(c.cId) FROM Computers c")
     , @NamedQuery(name = "Computers.findByCId", query = "SELECT c FROM Computers c WHERE c.cId = :cId")
     , @NamedQuery(name = "Computers.findByCNaam", query = "SELECT c FROM Computers c WHERE c.cNaam = :cNaam")
     , @NamedQuery(name = "Computers.findByCOmsch", query = "SELECT c FROM Computers c WHERE c.cOmsch = :cOmsch")

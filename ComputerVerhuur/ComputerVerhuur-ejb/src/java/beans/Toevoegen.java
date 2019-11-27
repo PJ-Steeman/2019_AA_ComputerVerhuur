@@ -5,13 +5,15 @@
  */
 package beans;
 
-import javax.ejb.Remote;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author pieji
  */
-@Remote
-public interface ToevoegenRemote {
-    
+@Stateless
+public class Toevoegen implements ToevoegenRemote {
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 }
