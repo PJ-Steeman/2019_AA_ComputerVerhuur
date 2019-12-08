@@ -41,28 +41,28 @@
         </form>
         
         <c:if test="${!empty sessionScope.docent}">
-        <form method="post" action='<c:url value="CVcontroller"/>'>
-            <table>
-                <tr>
-                    <th>Computer naam</th>
-                    <th>Korte omschrijving</th>
-                    <th>Lokaal</th>
-                    <th>Serienummer</th>
-                    <th>Aankoopprijs</th>
-                    <th>Huurprijs</th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="Naam"></td>
-                    <td><input type="text" name="Omsch"></td>
-                    <td><input type="text" name="Lokaal"></td>
-                    <td><input type="text" name="SerieNr"></td>
-                    <td><input type="text" name="Aankoop"></td>
-                    <td><input type="text" name="Huur"></td>
-                </tr>
-            </table>
-            <br>
-            <input name="submitKnop" type="submit" value="Nieuwe Computer">
-        </form>
+            <form method="post" action='<c:url value="CVcontroller"/>'>
+                <table>
+                    <tr>
+                        <th>Computer naam</th>
+                        <th>Korte omschrijving</th>
+                        <th>Lokaal</th>
+                        <th>Serienummer</th>
+                        <th>Aankoopprijs</th>
+                        <th>Huurprijs</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="Naam"></td>
+                        <td><input type="text" name="Omsch"></td>
+                        <td><input type="text" name="Lokaal"></td>
+                        <td><input type="text" name="SerieNr"></td>
+                        <td><input type="text" name="Aankoop"></td>
+                        <td><input type="text" name="Huur"></td>
+                    </tr>
+                </table>
+                <br>
+                <input name="submitKnop" type="submit" value="Nieuwe Computer">
+            </form>
         </c:if>
     </body>
 </html>

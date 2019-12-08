@@ -7,9 +7,7 @@ package beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,13 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,6 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Momenten.findAll", query = "SELECT m FROM Momenten m")
+    , @NamedQuery(name = "Momenten.findLast", query = "SELECT max(m.mId) FROM Momenten m")
+    , @NamedQuery(name = "Momenten.findByMComp", query = "SELECT m FROM Momenten m WHERE m.mComp = :mComp")
     , @NamedQuery(name = "Momenten.findByMId", query = "SELECT m FROM Momenten m WHERE m.mId = :mId")
     , @NamedQuery(name = "Momenten.findByMVan", query = "SELECT m FROM Momenten m WHERE m.mVan = :mVan")
     , @NamedQuery(name = "Momenten.findByMTot", query = "SELECT m FROM Momenten m WHERE m.mTot = :mTot")})
@@ -58,8 +56,9 @@ public class Momenten implements Serializable {
     @JoinColumn(name = "m_comp", referencedColumnName = "c_id")
     @ManyToOne(optional = false)
     private Computers mComp;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rMoment")
-    private List<Reservaties> reservatiesList;
+    @JoinColumn(name = "m_res", referencedColumnName = "r_id")
+    @ManyToOne(optional = false)
+    private Reservaties mRes;
 
     public Momenten() {
     }
@@ -106,13 +105,12 @@ public class Momenten implements Serializable {
         this.mComp = mComp;
     }
 
-    @XmlTransient
-    public List<Reservaties> getReservatiesList() {
-        return reservatiesList;
+    public Reservaties getMRes() {
+        return mRes;
     }
 
-    public void setReservatiesList(List<Reservaties> reservatiesList) {
-        this.reservatiesList = reservatiesList;
+    public void setMRes(Reservaties mRes) {
+        this.mRes = mRes;
     }
 
     @Override

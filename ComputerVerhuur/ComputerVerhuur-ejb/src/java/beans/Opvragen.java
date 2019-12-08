@@ -27,4 +27,23 @@ public class Opvragen implements OpvragenRemote {
         Object comp = em.createNamedQuery("Computers.findByCId").setParameter("cId",cid).getResultList().get(0);
         return comp;
     }
+    
+    public List<Object> opvragenMom(int cid){ 
+        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId",cid).getResultList().get(0);
+        System.out.println(comp.toString());
+        List<Object> mom = em.createNamedQuery("Momenten.findByMComp").setParameter("mComp",comp).getResultList();
+        System.out.println(mom.toString());
+        return mom;
+    }
+    
+    public List<Object> opvragenRes(int cid){
+        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId",cid).getResultList().get(0);
+        List<Object> mom = em.createNamedQuery("Momenten.findByMComp").setParameter("mComp",comp).getResultList();
+        //List<Object> res = null;
+        //for(int i = 0; i < mom.size(); i++)
+        //{
+        //    res.add(em.createNamedQuery("Reservaties.findByMoment").setParameter("rMoment",(Momenten)mom).getResultList());
+        //}
+        return mom;
+    }
 }

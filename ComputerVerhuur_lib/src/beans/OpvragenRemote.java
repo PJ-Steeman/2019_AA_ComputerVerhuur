@@ -13,6 +13,8 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface OpvragenRemote {
-        List<Object> opvragenComp();
-        Object opvragenCompById(int cid);
+    public List<Object> opvragenComp();
+    public Object opvragenCompById(int cid);
+    public List<Object> opvragenMom(int cid);
+    public List<Object> opvragenRes(int cid);
 }

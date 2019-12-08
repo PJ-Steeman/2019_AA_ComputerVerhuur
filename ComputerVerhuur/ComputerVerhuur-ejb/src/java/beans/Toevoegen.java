@@ -5,15 +5,60 @@
  */
 package beans;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
- *
- * @author pieji
+ * @author Pieter-Jan Steeman
  */
 @Stateless
 public class Toevoegen implements ToevoegenRemote {
+    
+    @PersistenceContext private EntityManager em;
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    public void toevoegenComp(String cNaam, String cOmsch, String cLok, String cOpl, int cSerie, int cAank, int cHuur)
+    {
+        int lastID = (int) em.createNamedQuery("Computers.findLast").getResultList().get(0)+1;
+        Computers comp = new Computers(lastID, cNaam, cOmsch, cLok, cOpl, cSerie, cAank, cHuur);
+        em.persist(comp);
+    }
+    
+    public void wijzigComp(int cId, String cNaam, String cOmsch, String cLok, int compSerie, int compAank, int compHuur)
+    {
+        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId",cId).getResultList().get(0);
+        comp.setCNaam(cNaam);
+        comp.setCOmsch(cOmsch);
+        comp.setCLok(cLok);
+        comp.setCSerie(compSerie);
+        comp.setCAankoop(compAank);
+        comp.setCHuur(compHuur);
+        em.merge(comp);
+    }
+    
+    public void toevoegenMoment(String van, String tot, int compId)
+    {
+        int lastId = (int) em.createNamedQuery("Momenten.findLast").getResultList().get(0)+1;
+        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId",compId).getResultList().get(0);
+        Reservaties res = (Reservaties) em.createNamedQuery("Reservaties.findByRId").setParameter("rId",0).getResultList().get(0);
+        
+        try {
+            Date vanDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(van);
+            Date totDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(tot);
+            
+            Momenten mom = new Momenten(lastId, vanDate, totDate);
+            mom.setMComp(comp);
+            mom.setMRes(res);
+            em.persist(mom);
+            
+        } catch (ParseException ex) {
+            System.out.println("Verkeerde date format");
+        }
+    }
 }

@@ -6,6 +6,7 @@
 package controllers;
 
 import beans.Computers;
+import beans.Momenten;
 import beans.OpvragenRemote;
 import beans.ToevoegenRemote;
 import java.io.IOException;
@@ -93,19 +94,23 @@ public class CVcontroller extends HttpServlet {
         String submitIn = (String) request.getParameter("submitKnop");
         String[] submitSoort = submitIn.split("-");
         List<Object> compLijst;
+        List<Object> resLijst;
+        List<Object> momLijst;
+        
+        request.getSession().setAttribute("docent", 1);
+        request.getSession().setAttribute("richting", "E/ICT");
+        
         int compSerie;
         int compAank;
         int compHuur;
         switch(submitSoort[0]){
-            case "Overzicht": 
-                request.getSession().setAttribute("docent", 1);
-                request.getSession().setAttribute("richting", "E/ICT");
-                
+            case "Overzicht":                 
                 compLijst = obean.opvragenComp();
                 getServletContext().setAttribute("computers", compLijst);
                 
                 gotoPage("overzicht.jsp", request, response);
                 break;
+                
             case "Info":
                 int id = Integer.parseInt(submitSoort[1]);
                 System.out.println(id);
@@ -113,23 +118,43 @@ public class CVcontroller extends HttpServlet {
                 request.getSession().setAttribute("compinfo", comp);
                 request.getSession().setAttribute("compId", id);
                 gotoPage("info.jsp", request, response);
+                
             case "Nieuwe Computer":
                 compSerie = Integer.parseInt(request.getParameter("SerieNr"));
                 compAank = Integer.parseInt(request.getParameter("Aankoop"));
                 compHuur = Integer.parseInt(request.getParameter("Huur"));
                 String richting = (String) request.getSession().getAttribute("richting");
-                //tbean.toevoegenComp(request.getParameter("Naam"), request.getParameter("Omsch"), request.getParameter("Lokaal"), richting, compSerie, compAank, compHuur);
+                tbean.toevoegenComp(request.getParameter("Naam"), request.getParameter("Omsch"), request.getParameter("Lokaal"), richting, compSerie, compAank, compHuur);
                 
                 compLijst = obean.opvragenComp();
                 getServletContext().setAttribute("computers", compLijst);
                 
                 gotoPage("overzicht.jsp", request, response);
                 break;
+                
             case "Wijzig Computer":
                 compSerie = Integer.parseInt(request.getParameter("SerieNr"));
                 compAank = Integer.parseInt(request.getParameter("Aankoop"));
                 compHuur = Integer.parseInt(request.getParameter("Huur"));
-                //tbean.wijzigComp((int) request.getSession().getAttribute("compId"), request.getParameter("Naam"), request.getParameter("Omsch"), request.getParameter("Lokaal"), compSerie, compAank, compHuur);
+                tbean.wijzigComp((int) request.getSession().getAttribute("compId"), request.getParameter("Naam"), request.getParameter("Omsch"), request.getParameter("Lokaal"), compSerie, compAank, compHuur);
+                compLijst = obean.opvragenComp();
+                getServletContext().setAttribute("computers", compLijst);
+                
+                gotoPage("overzicht.jsp", request, response);
+                break;
+                
+            case "Bekijk Reservaties":
+                momLijst = obean.opvragenMom((int) request.getSession().getAttribute("compId"));
+                request.getSession().setAttribute("momLijst", momLijst);
+                System.out.println(((Momenten)momLijst.get(0)).getMTot());
+                gotoPage("resOverzicht.jsp", request, response);
+                break;
+                
+            case "Nieuw Moment":
+                tbean.toevoegenMoment(request.getParameter("Van"), request.getParameter("Tot"), (int) request.getSession().getAttribute("compId"));
+                momLijst = obean.opvragenMom((int) request.getSession().getAttribute("compId"));
+                request.getSession().setAttribute("momLijst", momLijst);
+                gotoPage("resOverzicht.jsp", request, response);
                 break;
         }
     }

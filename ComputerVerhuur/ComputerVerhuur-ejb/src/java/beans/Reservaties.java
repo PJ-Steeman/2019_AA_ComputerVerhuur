@@ -6,7 +6,9 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,9 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,9 +45,8 @@ public class Reservaties implements Serializable {
     @NotNull
     @Column(name = "r_prijs")
     private int rPrijs;
-    @JoinColumn(name = "r_moment", referencedColumnName = "m_id")
-    @ManyToOne(optional = false)
-    private Momenten rMoment;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mRes")
+    private List<Momenten> momentenList;
     @JoinColumn(name = "r_user", referencedColumnName = "u_id")
     @ManyToOne(optional = false)
     private Users rUser;
@@ -76,12 +79,13 @@ public class Reservaties implements Serializable {
         this.rPrijs = rPrijs;
     }
 
-    public Momenten getRMoment() {
-        return rMoment;
+    @XmlTransient
+    public List<Momenten> getMomentenList() {
+        return momentenList;
     }
 
-    public void setRMoment(Momenten rMoment) {
-        this.rMoment = rMoment;
+    public void setMomentenList(List<Momenten> momentenList) {
+        this.momentenList = momentenList;
     }
 
     public Users getRUser() {

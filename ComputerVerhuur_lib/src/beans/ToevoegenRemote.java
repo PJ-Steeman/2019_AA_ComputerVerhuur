@@ -8,10 +8,15 @@ package beans;
 import javax.ejb.Remote;
 
 /**
- *
- * @author pieji
+ * @author Pieter-Jan Steeman
  */
 @Remote
 public interface ToevoegenRemote {
+
+    public void toevoegenComp(String cNaam, String cOmsch, String cLok, String cOpl, int cSerie, int cAank, int cHuur);
+
+    public void wijzigComp(int i, String parameter, String parameter0, String parameter1, int compSerie, int compAank, int compHuur);
+    
+    public void toevoegenMoment(String van, String tot, int compId);
     
 }

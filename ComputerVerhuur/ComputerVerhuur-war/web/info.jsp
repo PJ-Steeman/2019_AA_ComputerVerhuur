@@ -47,29 +47,33 @@
                     <p>${sessionScope.compinfo.CHuur}</p>
                 </td>
         </table>
-        <c:if test="${sessionScope.richting == comp.COpl}">
-            <form method="post" action='<c:url value="CVcontroller"/>'>
-            <table>
-                <tr>
-                    <th>Computer naam</th>
-                    <th>Korte omschrijving</th>
-                    <th>Lokaal</th>
-                    <th>Serienummer</th>
-                    <th>Aankoopprijs</th>
-                    <th>Huurprijs</th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="Naam" value="${sessionScope.compinfo.CNaam}"></td>
-                    <td><input type="text" name="Omsch" value="${sessionScope.compinfo.COmsch}"></td>
-                    <td><input type="text" name="Lokaal" value="${sessionScope.compinfo.CLok}"></td>
-                    <td><input type="text" name="SerieNr" value="${sessionScope.compinfo.CSerie}"></td>
-                    <td><input type="text" name="Aankoop" value="${sessionScope.compinfo.CAankoop}"></td>
-                    <td><input type="text" name="Huur" value="${sessionScope.compinfo.CHuur}"></td>
-                </tr>
-            </table>
-            <br>
-            <input name="submitKnop" type="submit" value="Wijzig Computer">
-            </form>
+        <c:if test="${!empty sessionScope.docent}">
+            <c:if test="${sessionScope.richting == sessionScope.compinfo.COpl}">
+                <form method="post" action='<c:url value="CVcontroller"/>'>
+                <table>
+                    <tr>
+                        <th>Computer naam</th>
+                        <th>Korte omschrijving</th>
+                        <th>Lokaal</th>
+                        <th>Serienummer</th>
+                        <th>Aankoopprijs</th>
+                        <th>Huurprijs</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="Naam" value="${sessionScope.compinfo.CNaam}"></td>
+                        <td><input type="text" name="Omsch" value="${sessionScope.compinfo.COmsch}"></td>
+                        <td><input type="text" name="Lokaal" value="${sessionScope.compinfo.CLok}"></td>
+                        <td><input type="text" name="SerieNr" value="${sessionScope.compinfo.CSerie}"></td>
+                        <td><input type="text" name="Aankoop" value="${sessionScope.compinfo.CAankoop}"></td>
+                        <td><input type="text" name="Huur" value="${sessionScope.compinfo.CHuur}"></td>
+                    </tr>
+                </table>
+                <br>
+                <input name="submitKnop" type="submit" value="Wijzig Computer">
+                <br>
+                <input name="submitKnop" type="submit" value="Bekijk Reservaties">
+                </form>
+            </c:if>
         </c:if>
     </body>
 </html>
