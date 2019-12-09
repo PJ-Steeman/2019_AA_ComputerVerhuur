@@ -61,4 +61,22 @@ public class Toevoegen implements ToevoegenRemote {
             System.out.println("Verkeerde date format");
         }
     }
+    
+    public void reserveer(int betalen, String uid, int mid, int compid)
+    {
+        int lastId = (int) em.createNamedQuery("Reservaties.findLast").getResultList().get(0)+1;
+            
+        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId", compid).getResultList().get(0);
+        Users user = (Users) em.createNamedQuery("Users.findByUId").setParameter("uId", uid).getResultList().get(0);
+        Momenten mom = (Momenten) em.createNamedQuery("Momenten.findByMId").setParameter("mId", mid).getResultList().get(0);
+
+        int prijs = comp.getCHuur()*betalen;
+        
+        Reservaties res = new Reservaties(lastId, prijs);
+        res.setRUser(user);
+        em.persist(res);
+        
+        mom.setMRes(res);
+        em.merge(mom);
+    }
 }

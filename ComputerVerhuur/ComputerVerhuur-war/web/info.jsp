@@ -47,7 +47,7 @@
                     <p>${sessionScope.compinfo.CHuur}</p>
                 </td>
         </table>
-        <c:if test="${!empty sessionScope.docent}">
+        <c:if test="${sessionScope.rol == 'docent'}">
             <c:if test="${sessionScope.richting == sessionScope.compinfo.COpl}">
                 <form method="post" action='<c:url value="CVcontroller"/>'>
                 <table>
@@ -71,9 +71,14 @@
                 <br>
                 <input name="submitKnop" type="submit" value="Wijzig Computer">
                 <br>
-                <input name="submitKnop" type="submit" value="Bekijk Reservaties">
+                <input name="submitKnop" type="submit" value="Bekijk Momenten">
                 </form>
             </c:if>
+        </c:if>
+            <form method="post" action='<c:url value="CVcontroller"/>'>
+                <input name="submitKnop" type="submit" value="Bekijk Vrije Momenten">
+            </form>
+        <c:if test="${sessionScope.rol != 'docent'}">
         </c:if>
     </body>
 </html>

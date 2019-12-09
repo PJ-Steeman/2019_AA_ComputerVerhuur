@@ -34,7 +34,7 @@
                 </tr>
             </c:forEach>
         </table>
-        <c:if test="${!empty sessionScope.docent}">
+        <c:if test="${sessionScope.rol == 'docent'}">
             <c:if test="${sessionScope.richting == sessionScope.compinfo.COpl}">
                 <form method="post" action='<c:url value="CVcontroller"/>'>
                     <p>Gelieve de datums en tijden in te geven volgens dd/MM/yyyy HH:mm:ss</p>

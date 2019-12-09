@@ -5,6 +5,7 @@
  */
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -34,6 +35,23 @@ public class Opvragen implements OpvragenRemote {
         List<Object> mom = em.createNamedQuery("Momenten.findByMComp").setParameter("mComp",comp).getResultList();
         System.out.println(mom.toString());
         return mom;
+    }
+    
+    public List<Object> opvragenVrijeMom(int cid){ 
+        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId",cid).getResultList().get(0);
+        System.out.println(comp.toString());
+        List<Object> mom = em.createNamedQuery("Momenten.findByMComp").setParameter("mComp",comp).getResultList();
+        List<Object> freeMom = new ArrayList<Object>();
+        for(int i = 0; i < mom.size(); i++)
+        {
+            if(((Momenten) mom.get(i)).getMRes().getRId() == 0)
+            {
+                Momenten temp = (Momenten) mom.get(i);
+                freeMom.add(temp);
+            }
+        }
+        System.out.println(freeMom.toString());
+        return freeMom;
     }
     
     public List<Object> opvragenRes(int cid){

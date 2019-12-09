@@ -97,12 +97,15 @@ public class CVcontroller extends HttpServlet {
         List<Object> resLijst;
         List<Object> momLijst;
         
-        request.getSession().setAttribute("docent", 1);
+        //request.getSession().setAttribute("rol", "docent");
+        request.getSession().setAttribute("rol", "student");
+        int betalen = 0;
         request.getSession().setAttribute("richting", "E/ICT");
         
         int compSerie;
         int compAank;
         int compHuur;
+        
         switch(submitSoort[0]){
             case "Overzicht":                 
                 compLijst = obean.opvragenComp();
@@ -143,10 +146,9 @@ public class CVcontroller extends HttpServlet {
                 gotoPage("overzicht.jsp", request, response);
                 break;
                 
-            case "Bekijk Reservaties":
+            case "Bekijk Momenten":
                 momLijst = obean.opvragenMom((int) request.getSession().getAttribute("compId"));
                 request.getSession().setAttribute("momLijst", momLijst);
-                System.out.println(((Momenten)momLijst.get(0)).getMTot());
                 gotoPage("resOverzicht.jsp", request, response);
                 break;
                 
@@ -155,6 +157,21 @@ public class CVcontroller extends HttpServlet {
                 momLijst = obean.opvragenMom((int) request.getSession().getAttribute("compId"));
                 request.getSession().setAttribute("momLijst", momLijst);
                 gotoPage("resOverzicht.jsp", request, response);
+                break;
+                
+            case "Bekijk Vrije Momenten":
+                momLijst = obean.opvragenVrijeMom((int) request.getSession().getAttribute("compId"));
+                request.getSession().setAttribute("momLijst", momLijst);
+                gotoPage("reserveer.jsp", request, response);
+                break;
+                
+            case "Reserveer":
+                String keuzeIn = (String) request.getParameter("keuzeKnop");
+                String[] keuze = keuzeIn.split("-");
+                //String unaam = request.getUserPrincipal().getName();
+                String unaam = "s1111";
+                tbean.reserveer(betalen, unaam, Integer.parseInt(keuze[1]), (int) request.getSession().getAttribute("compId"));
+                gotoPage("overzicht.jsp", request, response);
                 break;
         }
     }

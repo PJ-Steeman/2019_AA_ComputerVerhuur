@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Reservaties.findAll", query = "SELECT r FROM Reservaties r")
+    , @NamedQuery(name = "Reservaties.findLast", query = "SELECT max(r.rId) FROM Reservaties r")
     , @NamedQuery(name = "Reservaties.findByRId", query = "SELECT r FROM Reservaties r WHERE r.rId = :rId")
     , @NamedQuery(name = "Reservaties.findByRPrijs", query = "SELECT r FROM Reservaties r WHERE r.rPrijs = :rPrijs")})
 public class Reservaties implements Serializable {

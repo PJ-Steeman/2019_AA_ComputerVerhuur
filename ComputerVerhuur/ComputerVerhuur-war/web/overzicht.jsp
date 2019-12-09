@@ -40,7 +40,7 @@
         </table>
         </form>
         
-        <c:if test="${!empty sessionScope.docent}">
+        <c:if test="${sessionScope.rol == 'docent'}">
             <form method="post" action='<c:url value="CVcontroller"/>'>
                 <table>
                     <tr>
