@@ -17,5 +17,5 @@ public interface OpvragenRemote {
     public Object opvragenCompById(int cid);
     public List<Object> opvragenMom(int cid);
     public List<Object> opvragenVrijeMom(int cid);
-    public List<Object> opvragenRes(int cid);
+    public int opvragenPrijs(int mId);
 }

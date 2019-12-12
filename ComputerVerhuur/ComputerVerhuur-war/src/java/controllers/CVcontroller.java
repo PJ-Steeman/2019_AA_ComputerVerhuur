@@ -97,14 +97,16 @@ public class CVcontroller extends HttpServlet {
         List<Object> resLijst;
         List<Object> momLijst;
         
-        //request.getSession().setAttribute("rol", "docent");
-        request.getSession().setAttribute("rol", "student");
-        int betalen = 0;
+        request.getSession().setAttribute("rol", "docent");
+        //request.getSession().setAttribute("rol", "student");
+        //request.getSession().setAttribute("rol", "extern");
         request.getSession().setAttribute("richting", "E/ICT");
         
         int compSerie;
         int compAank;
         int compHuur;
+        
+        String unaam;
         
         switch(submitSoort[0]){
             case "Overzicht":                 
@@ -169,8 +171,30 @@ public class CVcontroller extends HttpServlet {
                 String keuzeIn = (String) request.getParameter("keuzeKnop");
                 String[] keuze = keuzeIn.split("-");
                 //String unaam = request.getUserPrincipal().getName();
-                String unaam = "s1111";
-                tbean.reserveer(betalen, unaam, Integer.parseInt(keuze[1]), (int) request.getSession().getAttribute("compId"));
+                unaam = "s1111";
+                tbean.reserveer(0, unaam, Integer.parseInt(keuze[1]));
+                gotoPage("overzicht.jsp", request, response);
+                break;
+                
+            case "Vraag prijs":
+                String keuzeInp = (String) request.getParameter("keuzeKnop");
+                String[] keuzep = keuzeInp.split("-");
+                
+                request.getSession().setAttribute("moment", Integer.parseInt(keuzep[1]));
+                
+                int prijs = obean.opvragenPrijs(Integer.parseInt(keuzep[1]));
+                request.getSession().setAttribute("prijs", prijs);
+                gotoPage("prijs.jsp", request, response);
+                break;
+                
+            case "Bevestig Reservatie":
+                //String unaam = request.getUserPrincipal().getName();
+                unaam = "e";
+                tbean.reserveer(1, unaam, (int) request.getSession().getAttribute("moment"));
+                gotoPage("overzicht.jsp", request, response);
+                break;
+                
+            case "Annuleer":
                 gotoPage("overzicht.jsp", request, response);
                 break;
         }

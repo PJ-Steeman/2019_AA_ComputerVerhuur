@@ -54,14 +54,13 @@ public class Opvragen implements OpvragenRemote {
         return freeMom;
     }
     
-    public List<Object> opvragenRes(int cid){
-        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId",cid).getResultList().get(0);
-        List<Object> mom = em.createNamedQuery("Momenten.findByMComp").setParameter("mComp",comp).getResultList();
-        //List<Object> res = null;
-        //for(int i = 0; i < mom.size(); i++)
-        //{
-        //    res.add(em.createNamedQuery("Reservaties.findByMoment").setParameter("rMoment",(Momenten)mom).getResultList());
-        //}
-        return mom;
+    public int opvragenPrijs(int mId)
+    {
+        Momenten mom = (Momenten) em.createNamedQuery("Momenten.findByMId").setParameter("mId", mId).getResultList().get(0);
+        Computers comp = mom.getMComp();
+        long verschil = mom.getMTot().getTime() - mom.getMVan().getTime();
+        int aantalUren = (int) verschil / (60 * 60 * 1000);
+        System.out.println("UREN: " + aantalUren);
+        return comp.getCHuur()*aantalUren;
     }
 }

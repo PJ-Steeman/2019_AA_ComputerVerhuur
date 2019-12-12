@@ -62,15 +62,18 @@ public class Toevoegen implements ToevoegenRemote {
         }
     }
     
-    public void reserveer(int betalen, String uid, int mid, int compid)
+    public void reserveer(int betalen, String uid, int mid)
     {
         int lastId = (int) em.createNamedQuery("Reservaties.findLast").getResultList().get(0)+1;
             
-        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId", compid).getResultList().get(0);
         Users user = (Users) em.createNamedQuery("Users.findByUId").setParameter("uId", uid).getResultList().get(0);
         Momenten mom = (Momenten) em.createNamedQuery("Momenten.findByMId").setParameter("mId", mid).getResultList().get(0);
-
-        int prijs = comp.getCHuur()*betalen;
+        Computers comp = mom.getMComp();
+        
+        long verschil = mom.getMTot().getTime() - mom.getMVan().getTime();
+        int aantalUren = (int) verschil / (60 * 60 * 1000);
+        System.out.println("UREN: " + aantalUren);
+        int prijs = comp.getCHuur()*betalen*aantalUren;
         
         Reservaties res = new Reservaties(lastId, prijs);
         res.setRUser(user);

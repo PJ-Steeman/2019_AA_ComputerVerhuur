@@ -19,6 +19,6 @@ public interface ToevoegenRemote {
     
     public void toevoegenMoment(String van, String tot, int compId);
     
-    public void reserveer(int betalen, String uid, int mid, int compid);
+    public void reserveer(int betalen, String uid, int mid);
     
 }

@@ -40,7 +40,12 @@
                 </c:forEach>
             </table>
             <br>
-            <input name="submitKnop" type="submit" value="Reserveer">
+            <c:if test="${sessionScope.rol == 'student'}">
+                <input name="submitKnop" type="submit" value="Reserveer">
+            </c:if>
+            <c:if test="${sessionScope.rol == 'extern'}">
+                <input name="submitKnop" type="submit" value="Vraag prijs">
+            </c:if>
         </form>
     </body>
 </html>

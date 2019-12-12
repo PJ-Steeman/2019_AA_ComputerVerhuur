@@ -75,10 +75,10 @@
                 </form>
             </c:if>
         </c:if>
+        <c:if test="${sessionScope.rol != 'docent'}">
             <form method="post" action='<c:url value="CVcontroller"/>'>
                 <input name="submitKnop" type="submit" value="Bekijk Vrije Momenten">
             </form>
-        <c:if test="${sessionScope.rol != 'docent'}">
         </c:if>
     </body>
 </html>
