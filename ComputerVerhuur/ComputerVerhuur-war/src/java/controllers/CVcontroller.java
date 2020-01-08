@@ -170,7 +170,7 @@ public class CVcontroller extends HttpServlet {
             case "Reserveer":
                 String keuzeIn = (String) request.getParameter("keuzeKnop");
                 String[] keuze = keuzeIn.split("-");
-                //String unaam = request.getUserPrincipal().getName();
+                //unaam = request.getUserPrincipal().getName();
                 unaam = "s1111";
                 tbean.reserveer(0, unaam, Integer.parseInt(keuze[1]));
                 gotoPage("overzicht.jsp", request, response);
@@ -188,7 +188,7 @@ public class CVcontroller extends HttpServlet {
                 break;
                 
             case "Bevestig Reservatie":
-                //String unaam = request.getUserPrincipal().getName();
+                //unaam = request.getUserPrincipal().getName();
                 unaam = "e";
                 tbean.reserveer(1, unaam, (int) request.getSession().getAttribute("moment"));
                 gotoPage("overzicht.jsp", request, response);
