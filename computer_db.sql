@@ -135,7 +135,7 @@ INSERT INTO `users` (`u_id`, `u_naam`, `u_wachtwoord`, `u_richting`) VALUES
 ('0', 'Niet gereserveerd', 'NVT', 'NVT'),
 ('d1111', 'Joost Vennekens', '1234', 'E/ICT'),
 ('d1112', 'Raf Dewil', '4321', 'Chemie'),
-('e', 'Hugh Mungus', 'a1b2', 'ext'),
+('e', 'Extern', 'NVT', 'ext'),
 ('s1111', 'Jonas Michiels', 'abcd', 'E/ICT');
 
 --
