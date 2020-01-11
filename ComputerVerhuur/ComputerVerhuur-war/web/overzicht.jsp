@@ -13,7 +13,7 @@
         <title>Overzicht</title>
     </head>
     <body>
-        <h1>Overzichtspagina</h1>
+        <h1>Overzichtspagina voor ${sessionScope.rol} van ${sessionScope.richting}</h1>
         <form method="post" action='<c:url value="CVcontroller"/>'>
         <table>
             <tr>

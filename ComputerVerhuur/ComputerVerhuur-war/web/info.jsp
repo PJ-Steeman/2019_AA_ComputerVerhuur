@@ -71,9 +71,10 @@
                 <br>
                 <input name="submitKnop" type="submit" value="Wijzig Computer">
                 <br>
-                <input name="submitKnop" type="submit" value="Bekijk Momenten">
-                </form>
             </c:if>
+            <form method="post" action='<c:url value="CVcontroller"/>'>
+                <input name="submitKnop" type="submit" value="Bekijk Momenten">
+            </form>
         </c:if>
         <c:if test="${sessionScope.rol != 'docent'}">
             <form method="post" action='<c:url value="CVcontroller"/>'>

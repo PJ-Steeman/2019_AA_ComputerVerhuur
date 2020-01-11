@@ -1198,8 +1198,8 @@ exists or setup the property manually. For example like this:
         <ant antfile="${project.ComputerVerhuur_lib}/build.xml" inheritall="false" target="clean"/>
     </target>
     <target depends="init" name="-do-clean">
-        <delete dir="${build.dir}"/>
-        <delete dir="${dist.dir}"/>
+        <delete dir="${build.dir}" failonerror="false"/>
+        <delete dir="${dist.dir}" failonerror="false"/>
     </target>
     <target name="-post-clean">
         <!-- Empty placeholder for easier customization. -->

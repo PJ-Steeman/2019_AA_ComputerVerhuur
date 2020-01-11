@@ -6,6 +6,7 @@
 package controllers;
 
 import beans.Computers;
+import beans.Users;
 import beans.Momenten;
 import beans.OpvragenRemote;
 import beans.ToevoegenRemote;
@@ -19,7 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.util.logging.Logger;
 /**
  * @author Jonas Michiels en Pieter-Jan Steeman
  */
@@ -40,17 +41,13 @@ public class CVcontroller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println("student");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CVcontroller</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CVcontroller at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        //if (request.isUserInRole("student")){
+            //request.getSession().setAttribute("student", 1);
+            //gotoPage("overzicht.jsp",request,response);
+        //}
         }
     }
 
@@ -91,25 +88,42 @@ public class CVcontroller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //processRequest(request, response);
+        Logger logger = Logger.getLogger(getClass().getName());
         String submitIn = (String) request.getParameter("submitKnop");
         String[] submitSoort = submitIn.split("-");
         List<Object> compLijst;
         List<Object> resLijst;
         List<Object> momLijst;
         
-        request.getSession().setAttribute("rol", "docent");
+        String unaam = request.getUserPrincipal().getName();
+        
+        if (request.isUserInRole("docent")){
+                    request.getSession().setAttribute("rol", "docent");
+                    request.getSession().setAttribute("richting", obean.opvragenRichting(unaam));
+        }
+        if (request.isUserInRole("student")){
+                    request.getSession().setAttribute("rol", "student");
+                    request.getSession().setAttribute("richting", obean.opvragenRichting(unaam));
+        }
+        if (request.isUserInRole("extern")){
+                    request.getSession().setAttribute("rol", "extern");
+        }
+        //request.getSession().setAttribute("rol", "docent");
         //request.getSession().setAttribute("rol", "student");
         //request.getSession().setAttribute("rol", "extern");
-        request.getSession().setAttribute("richting", "E/ICT");
         
         int compSerie;
         int compAank;
         int compHuur;
         
-        String unaam;
-        
         switch(submitSoort[0]){
-            case "Overzicht":                 
+            case "Overzicht": 
+                String uid = request.getUserPrincipal().getName();
+                Users user = (Users) obean.opvragenUser(uid);
+                String richtinguser = user.getURichting();
+                request.getSession().setAttribute("richting", richtinguser);
+                
                 compLijst = obean.opvragenComp();
                 getServletContext().setAttribute("computers", compLijst);
                 
@@ -170,8 +184,7 @@ public class CVcontroller extends HttpServlet {
             case "Reserveer":
                 String keuzeIn = (String) request.getParameter("keuzeKnop");
                 String[] keuze = keuzeIn.split("-");
-                //unaam = request.getUserPrincipal().getName();
-                unaam = "s1111";
+
                 tbean.reserveer(0, unaam, Integer.parseInt(keuze[1]));
                 gotoPage("overzicht.jsp", request, response);
                 break;
@@ -188,8 +201,6 @@ public class CVcontroller extends HttpServlet {
                 break;
                 
             case "Bevestig Reservatie":
-                //unaam = request.getUserPrincipal().getName();
-                unaam = "e";
                 tbean.reserveer(1, unaam, (int) request.getSession().getAttribute("moment"));
                 gotoPage("overzicht.jsp", request, response);
                 break;

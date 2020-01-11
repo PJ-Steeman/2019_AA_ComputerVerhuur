@@ -18,4 +18,8 @@ public interface OpvragenRemote {
     public List<Object> opvragenMom(int cid);
     public List<Object> opvragenVrijeMom(int cid);
     public int opvragenPrijs(int mId);
+    public Object opvragenUser(String uid);
+    public List<String> opvragenCompClient();
+    public List<String> opvragenResClient(int cid);
+    public String opvragenRichting(String uid);
 }

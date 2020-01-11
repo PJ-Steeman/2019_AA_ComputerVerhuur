@@ -23,6 +23,33 @@ public class Opvragen implements OpvragenRemote {
         List<Object> comp = em.createNamedQuery("Computers.findAll").getResultList();
         return comp;
     }
+    public List<String> opvragenCompClient(){
+        List<Object> comp = em.createNamedQuery("Computers.findAll").getResultList();
+        List<String> comps = new ArrayList();
+        for(int i = 0; i < comp.size(); i++){
+            comps.add(((Computers)comp.get(i)).getCId() + " - " + ((Computers)comp.get(i)).getCNaam() + " - " + ((Computers)comp.get(i)).getCOmsch());
+        }
+        return comps;
+    }
+    
+    public List<String> opvragenResClient(int cid){
+        Computers comp = (Computers) em.createNamedQuery("Computers.findByCId").setParameter("cId", cid).getResultList().get(0);
+        List<Object> res = em.createNamedQuery("Momenten.findByMComp").setParameter("mComp",comp).getResultList();
+        
+        List<String> reservaties = new ArrayList<>();
+        
+        for(int i = 0; i<res.size();i++){
+            if(((Momenten)res.get(i)).getMRes().getRId() != 0){
+                reservaties.add(((Momenten)res.get(i)).getMVan().toString() + " - " + ((Momenten)res.get(i)).getMTot().toString() + " - " + ((Momenten)res.get(i)).getMRes().getRUser().getUNaam());
+            }
+        }
+        return reservaties;
+        
+    }
+    public Object opvragenUser(String uid){
+        Object user = em.createNamedQuery("Users.findByUId").setParameter("uId", uid).getResultList().get(0);
+        return user;
+    }
     
     public Object opvragenCompById(int cid){
         Object comp = em.createNamedQuery("Computers.findByCId").setParameter("cId",cid).getResultList().get(0);
@@ -62,5 +89,11 @@ public class Opvragen implements OpvragenRemote {
         int aantalUren = (int) verschil / (60 * 60 * 1000);
         System.out.println("UREN: " + aantalUren);
         return comp.getCHuur()*aantalUren;
+    }
+    
+    public String opvragenRichting(String uid)
+    {
+        Users gebruiker = (Users) em.createNamedQuery("Users.findByUId").setParameter("uId", uid).getResultList().get(0);
+        return gebruiker.getURichting();
     }
 }
