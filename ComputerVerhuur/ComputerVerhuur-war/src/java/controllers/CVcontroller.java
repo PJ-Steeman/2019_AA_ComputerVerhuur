@@ -101,13 +101,16 @@ public class CVcontroller extends HttpServlet {
         if (request.isUserInRole("docent")){
                     request.getSession().setAttribute("rol", "docent");
                     request.getSession().setAttribute("richting", obean.opvragenRichting(unaam));
+                    request.getSession().setAttribute("naam", unaam);
         }
         if (request.isUserInRole("student")){
                     request.getSession().setAttribute("rol", "student");
                     request.getSession().setAttribute("richting", obean.opvragenRichting(unaam));
+                    request.getSession().setAttribute("naam", unaam);
         }
         if (request.isUserInRole("extern")){
                     request.getSession().setAttribute("rol", "extern");
+                    request.getSession().setAttribute("naam", unaam);
         }
         //request.getSession().setAttribute("rol", "docent");
         //request.getSession().setAttribute("rol", "student");
@@ -207,6 +210,16 @@ public class CVcontroller extends HttpServlet {
                 
             case "Annuleer":
                 gotoPage("overzicht.jsp", request, response);
+                break;
+                
+            case "Afmelden":
+                request.getSession().invalidate();
+                gotoPage("login.jsp", request, response);
+                break;
+                
+            case "Opnieuw Aanmelden":
+                request.getSession().invalidate();
+                gotoPage("login.jsp", request, response);
                 break;
         }
     }

@@ -10,6 +10,7 @@
     <head>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="fragment.jspf"/>
         <title>Momenten overzicht</title>
     </head>
     <body>
@@ -47,5 +48,6 @@
                 <input name="submitKnop" type="submit" value="Vraag prijs">
             </c:if>
         </form>
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>

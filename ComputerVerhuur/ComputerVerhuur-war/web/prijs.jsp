@@ -10,6 +10,7 @@
     <head>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="fragment.jspf"/>
         <title>Prijs controle</title>
     </head>
     <body>
@@ -19,5 +20,6 @@
            <input name="submitKnop" type="submit" value="Bevestig Reservatie">
            <input name="submitKnop" type="submit" value="Annuleer">
         </form>
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>
